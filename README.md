@@ -10,7 +10,7 @@ Graysand is custom firmware for the full-size Snowsky Echo (4 GB and 8 GB models
 - Bluetooth headphones and USB DAC mode
 - five themes in one image
 
-It is built on the work of Basil ([EchoPod](https://github.com/BasilSkyWalk/echopod)) and Pavel Popov, who ported EchoPod to the full-size Echo ([velppa/podium](https://github.com/velppa/podium)). The firmware still writes `PODIUM` into its image header, so the updater in earlier builds keeps accepting new images. [`CREDITS.md`](CREDITS.md) lists everyone and every license.
+It is built on the work of Basil ([EchoPod](https://github.com/BasilSkyWalk/echopod)) and [Podium](https://podium-echo.online/), which ported EchoPod to the full-size Echo. The firmware still writes `PODIUM` into its image header, so the updater in earlier builds keeps accepting new images. [`CREDITS.md`](CREDITS.md) lists everyone and every license.
 
 It is unofficial and comes with no warranty. Most of what is described here has been checked in the desktop simulator and in the firmware emulator, which runs the real image. The newest changes (the loaded code block, live blur and storage reporting) have not been tried on a real player yet.
 
@@ -256,7 +256,7 @@ The image is 5,242,884 bytes: one 5 MiB firmware slot plus a 4-byte CRC. The res
 
 ### Credits and license
 
-The firmware comes from EchoPod by Basil and Podium by Pavel Popov. Much of the hardware knowledge comes from [ReChord](https://github.com/brnomt/ReChord). [`CREDITS.md`](CREDITS.md) has the full list.
+The firmware comes from EchoPod by Basil and [Podium](https://podium-echo.online/). Much of the hardware knowledge comes from [ReChord](https://github.com/brnomt/ReChord). [`CREDITS.md`](CREDITS.md) has the full list.
 
 GPL-3.0-or-later ([`LICENSE`](LICENSE)). The Inter font is under the SIL Open Font License (`assets/fonts/inter/OFL.txt`), libmad and FAAD2 under GPL-2.0-or-later, and dr_libs is public domain or MIT-0.
 

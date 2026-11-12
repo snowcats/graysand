@@ -7,7 +7,7 @@ This firmware is a fork of a fork. Almost all of it is other people's work, and 
 | Project | People | License | What it gave |
 |---|---|---|---|
 | [EchoPod](https://github.com/BasilSkyWalk/echopod) 0.6.0 | Basil ([BasilSkyWalk](https://github.com/BasilSkyWalk)), about 240 commits | GPL-3.0-or-later | The firmware itself: the interface, the library, playback, gapless audio, the updater and most of the code in `src/` and `platform/` |
-| [Podium](https://github.com/velppa/podium) 4.5.5 | Pavel Popov ([velppa](https://github.com/velppa)) | GPL-3.0-or-later | The port of EchoPod to the full-size Echo, iPod-sized text, Cyrillic, M4A playback, settings on internal storage, and the documentation this fork started from |
+| [Podium](https://podium-echo.online/) 4.5.5 | [podium-echo.online](https://podium-echo.online/) | GPL-3.0-or-later | The port of EchoPod to the full-size Echo, iPod-sized text, Cyrillic, M4A playback, settings on internal storage, and the documentation this fork started from |
 | This firmware, 4.6.0 | [swap](https://github.com/swap) | GPL-3.0-or-later | Themes and the theme selector, Home emblems, the Home art setting, Windows build and test fixes, the emulator benchmark, rewritten documentation |
 
 ## Hardware research
