@@ -1,0 +1,77 @@
+name: release
+
+on:
+  push:
+    branches: ['**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  image:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake ninja-build gcc-arm-none-eabi libnewlib-arm-none-eabi python3
+
+      - name: Build release image
+        run: |
+          short=${GITHUB_SHA::7}
+          cmake --preset release -G Ninja -DECHO_BUILD_TAG=$short
+          cmake --build --preset release
+          image=$(ls build/release/ECHOV*.IMG)
+          grep -c "$short" "$image" > /dev/null || { echo "build tag $short missing from $image"; exit 1; }
+          echo "Image carries build tag $short"
+
+      - name: Collect image
+        id: image
+        env:
+          REPO: ${{ github.repository }}
+        run: |
+          version=$(sed -n 's/^set(PODIUM_VERSION \([0-9.]*\))$/\1/p' CMakeLists.txt)
+          image=$(ls build/release/ECHOV*.IMG)
+          name=$(basename "$image")
+          sha=$(sha256sum "$image" | cut -d' ' -f1)
+          size=$(stat -c %s "$image")
+          echo "$sha  $name" > "build/release/$name.sha256"
+          echo "tag=v0.1.0" >> "$GITHUB_OUTPUT"
+          echo "name=$name" >> "$GITHUB_OUTPUT"
+          {
+            echo "| File | Size | SHA-256 |"
+            echo "|---|---|---|"
+            echo "| \`$name\` | $size bytes | \`$sha\` |"
+            echo
+            echo "Copy \`$name\` to the top level of the player's internal storage, eject and unplug. It installs itself and restarts. Pick Pokemon, Zelda, Lain or Noah in Settings, Theme. Full steps and the way back: [README.md](https://github.com/$REPO/blob/$GITHUB_SHA/README.md)."
+            echo
+            echo "Graysand 0.1.0 (firmware $version), built from \`${GITHUB_SHA::7}\`."
+          } > build/release/notes.md
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.image.outputs.name }}
+          path: |
+            build/release/${{ steps.image.outputs.name }}
+            build/release/${{ steps.image.outputs.name }}.sha256
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.image.outputs.tag }}
+          NAME: ${{ steps.image.outputs.name }}
+        working-directory: build/release
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "$NAME" "$NAME.sha256" --clobber
+            gh release edit "$TAG" --notes-file notes.md
+          else
+            gh release create "$TAG" "$NAME" "$NAME.sha256" --target "$GITHUB_SHA" --title "$TAG" --notes-file notes.md
+          fi

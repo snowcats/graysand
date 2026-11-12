@@ -1,0 +1,57 @@
+# CMake / Ninja output (dev, device, release, tests)
+build/
+cmake-build-*/
+out/
+Testing/
+CMakeCache.txt
+CMakeFiles/
+CMakeUserPresets.json
+compile_commands.json
+cmake_install.cmake
+CTestTestfile.cmake
+*.obj
+*.o
+*.a
+*.lib
+*.exe
+*.dll
+*.pdb
+*.ilk
+*.exp
+*.elf
+*.map
+.ninja_deps
+.ninja_log
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+
+# Fetched deps and local caches
+external/
+.cache/
+log/
+.wrangler/
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.lnk
+.idea/
+*.user
+*.suo
+
+# Secrets
+.env
+.env.*
+!.env.example
